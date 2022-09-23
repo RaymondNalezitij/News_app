@@ -24,4 +24,11 @@ Route::post('/dashboard', [\App\Http\Controllers\DashboardController::class, 'st
     ->name('dashboard.store')
     ->middleware(['auth']);
 
+Route::get('/addAdmins', [\App\Http\Controllers\AddAdminController::class, 'create'])
+    ->name('addAdmins')
+    ->middleware(['auth']);
+Route::post('/addAdmins', [\App\Http\Controllers\AddAdminController::class, 'store'])
+    ->name('addAdmins.store')
+    ->middleware(['auth']);
+
 require __DIR__ . '/auth.php';
