@@ -14,10 +14,6 @@ class DashboardController extends Controller
 {
     public function create(): view
     {
-        $admin = AdminRole::select('is_admin_at')
-            ->where('user_id', Auth::id())
-            ->get();
-
         return view('dashboard', data: [
             'admin_status' => AdminRole::select('is_admin_at')
                 ->where('user_id', Auth::id())
@@ -30,7 +26,7 @@ class DashboardController extends Controller
     {
         if (isset($_POST['createPost'])) {
             $this->validate($request, [
-                'postText' => ['required'],
+                'postCreateText' => ['required'],
             ]);
 
             $newPost = new Post([
@@ -41,13 +37,18 @@ class DashboardController extends Controller
 
         } else if (isset($_POST['deletePost'])) {
             $this->validate($request, [
-                'postNumber' => ['required'],
+                'createdAt' => ['required'],
             ]);
 
-            var_dump($request->postNumber);
-            die;
+            Post::where('created_at', $request->createdAt)->delete();
 
         } else if (isset($_POST['editPost'])) {
+            $this->validate($request, [
+                'createdAt' => ['required'],
+                'postEditText' => ['required'],
+            ]);
+
+            Post::where('created_at', $request->createdAt)->update(["text" => $request->postEditText]);
         }
 
         return Redirect::route('dashboard');
