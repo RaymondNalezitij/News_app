@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('addAdmins')" :active="request()->routeIs('addAdmins')">
-                        {{ __('Buy/Sell') }}
+                        {{ __('Add/remove admin') }}
                     </x-nav-link>
                 </div>
             </div>

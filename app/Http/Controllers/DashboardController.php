@@ -9,6 +9,7 @@ use App\Jobs\PostCreateJob;
 use App\Jobs\PostDeleteJob;
 use App\Jobs\PostEditJob;
 use App\Models\AdminRole;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
@@ -30,6 +31,7 @@ class DashboardController extends Controller
             'comments' => Comment::select('*')->get()->reverse(),
             'users' => User::select('id','name'),
             'AdminRoles' => AdminRole::select('id','user_id','is_admin_at'),
+            'categories' => Category::select('*')->get(),
         ]);
     }
 
@@ -88,9 +90,32 @@ class DashboardController extends Controller
             ]);
 
             $this->dispatch(new CommentEditJob(
-                $request->commentId,
-                $request->commentEditText,
+                $request->get('commentId'),
+                $request->get('commentEditText'),
             ));
+
+        } else if (isset($_POST['addCategory'])) {
+            $this->validate($request, [
+                'category_name' => ['required'],
+            ]);
+
+            $newCategory = new Category([
+                'name' => $request->get('category_name'),
+            ]);
+            $newCategory->save();
+        } else if (isset($_POST['removeCategory'])) {
+            $this->validate($request, [
+                'category_name' => ['required'],
+            ]);
+
+            Category::where('name', $request->get('category_name'))->delete();
+        } else if (isset($_POST['assignCategory'])) {
+            $this->validate($request, [
+                'category' => ['required'],
+            ]);
+
+            $categoryId = Category::select('id')->where('name', $request->get('category'))->get();
+            Post::where('id', $request->get('postId'))->update(['category_id' => $categoryId[0]->id]);
 
         }
 

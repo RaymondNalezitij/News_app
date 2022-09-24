@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->bigInteger('category_id')->default(1);
             $table->longText('text');
             $table->softDeletes();
             $table->timestamps();

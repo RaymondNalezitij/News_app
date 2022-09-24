@@ -50,6 +50,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        AdminRole::create([
+            'user_id' => Auth::id()
+        ]);
+
         return redirect(RouteServiceProvider::HOME);
     }
 }

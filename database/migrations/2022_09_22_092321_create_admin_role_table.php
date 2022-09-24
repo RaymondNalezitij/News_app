@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('admin_roles', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
-            $table->string('is_admin_at');
+            $table->string('is_admin_at')->nullable()->default('');
             $table->timestamps();
         });
     }

@@ -2,13 +2,22 @@
     font-size: 12px;
 }
 
-.comment p{
+.comment p {
     font-size: 13px;
 }
 
 .postText {
     margin: 5px;
     font-size: 20px;
+}
+
+.categoryInput {
+    width: 100px;
+}
+
+.categoryInput:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .commentInput {
