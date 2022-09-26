@@ -17,6 +17,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
@@ -29,14 +30,15 @@ class DashboardController extends Controller
                 ->get(),
             'posts' => Post::select('*')->get()->reverse(),
             'comments' => Comment::select('*')->get()->reverse(),
-            'users' => User::select('id','name'),
-            'AdminRoles' => AdminRole::select('id','user_id','is_admin_at'),
+            'users' => User::select('id', 'name'),
+            'AdminRoles' => AdminRole::select('id', 'user_id', 'is_admin_at'),
             'categories' => Category::select('*')->get(),
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+
         if (isset($_POST['createPost'])) {
             $this->validate($request, ['postCreateText' => ['required'],]);
 
@@ -117,6 +119,21 @@ class DashboardController extends Controller
             $categoryId = Category::select('id')->where('name', $request->get('category'))->get();
             Post::where('id', $request->get('postId'))->update(['category_id' => $categoryId[0]->id]);
 
+        } else if (isset($_POST['sortById'])) {
+
+            if($request->get('category') !== 'all') {
+                $categoryNumber = Category::select('id')->where('name', $request->get('category'))->get();
+                return view('dashboard', data: [
+                    'admin_status' => AdminRole::select('is_admin_at')
+                        ->where('user_id', Auth::id())
+                        ->get(),
+                    'posts' => Post::select('*')->where('category_id', $categoryNumber[0]->id)->get()->reverse(),
+                    'comments' => Comment::select('*')->get()->reverse(),
+                    'users' => User::select('id', 'name'),
+                    'AdminRoles' => AdminRole::select('id', 'user_id', 'is_admin_at'),
+                    'categories' => Category::select('*')->get(),
+                ]);
+            }
         }
 
         return Redirect::route('dashboard');

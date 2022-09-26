@@ -12,16 +12,22 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div style="display: flex; flex-direction: row">
-
-                        <select name="category" id="category">
-                            <option value="all">All</option>
-                            @foreach($categories as $category)
-                                @if($category->id > 1)
-                                    <option value="{{ $category->name }}">{{ $category->name }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-
+                        <form action="{{ route('dashboard.store') }}" method="POST">
+                            @csrf
+                            <div style="display: flex; flex-direction: column">
+                            <label for="category">
+                                <select name="category" id="category">
+                                    <option value="all">All</option>
+                                    @foreach($categories as $category)
+                                        @if($category->id > 1)
+                                            <option value="{{ $category->name }}">{{ $category->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </label>
+                            <button type="submit" name="sortById">Sort by category</button>
+                            </div>
+                        </form>
                         @if(count($admin_status) > 0)
                             @if($admin_status[0]->is_admin_at == 'global' || $admin_status[0]->is_admin_at == 'dashboard')
                                 <form action="{{ route('dashboard.store') }}" method="POST">
