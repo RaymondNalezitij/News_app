@@ -42,14 +42,12 @@
 
 9. To run the project in your terminal run : php artisan serve
 
-10. The program automatically adds an admin user, to log in to the admin user use:
-    - username: admin@gmail.com
-    - password: password
-
----
-
 <h1>After starting</h1>
 
 ---
 
 The page link is http://127.0.0.1:8000
+
+The program automatically adds an admin user, to log in to the admin user use:
+  - username: admin@gmail.com
+  - password: password
