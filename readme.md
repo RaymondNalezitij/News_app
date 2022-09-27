@@ -2,7 +2,7 @@
 
 ---
 
-- Node.js >= 16.10
+- Node.js >= 18.07
 - PHP >= 8.0
 - Laravel >= 9.0
 - composer >= 2.3.3
@@ -29,18 +29,22 @@
 5. Finally, we will need npm which comes with Node.js.
    Node.js installation guide can be found here https://nodejs.org/en/
 
-6. Install laravel dependencies using composer install
+6. To finish npm installation run: 
+   - npm install
+   - npm run build
 
-7. Go to project directory rename the .env.example to .env and if needed change the:
+7. Install laravel dependencies using: composer install
+
+8. Go to project directory rename the .env.example to .env and if needed change the:
    - DB_DATABASE
    - DB_USERNAME
    - DB_PASSWORD
    
    to the parameters that you have set for your mysql
 
-8. Go to project directory and in your terminal run : php artisan migrate --seed
+9. Go to project directory and in your terminal run : php artisan migrate --seed
 
-9. To run the project in your terminal run : php artisan serve
+10. To run the project in your terminal run : php artisan serve
 
 <h1>After starting</h1>
 
